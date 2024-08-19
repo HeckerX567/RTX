@@ -7,10 +7,12 @@ public class FPSCounter : MonoBehaviour
 {
     public float fps;
     public Text fpstext;
+    public GameObject fp;
 
     // Update is called once per frame
     void Update()
     {
+        fp.SetActive(true);
         fps = 1.0f / Time.deltaTime;
         fpstext.text = "FPS: " + (int)fps;
     }
