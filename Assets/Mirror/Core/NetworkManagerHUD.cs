@@ -60,14 +60,14 @@ namespace Mirror
                 }
 #else
                 // Server + Client
-                if (GUILayout.Button("Host (Server + Client)"))
+                if (GUILayout.Button("Host (Client + Server)"))
                     manager.StartHost();
 #endif
 
                 // Client + IP (+ PORT)
                 GUILayout.BeginHorizontal();
 
-                if (GUILayout.Button("Client"))
+                if (GUILayout.Button("Join Server"))
                     manager.StartClient();
 
                 manager.networkAddress = GUILayout.TextField(manager.networkAddress);
@@ -98,7 +98,7 @@ namespace Mirror
             {
                 // Connecting
                 GUILayout.Label($"Connecting to {manager.networkAddress}..");
-                if (GUILayout.Button("Cancel Connection Attempt"))
+                if (GUILayout.Button("Cancel Connection"))
                     manager.StopClient();
             }
         }
@@ -136,11 +136,11 @@ namespace Mirror
                     manager.StopHost();
 #else
                 // stop host if host mode
-                if (GUILayout.Button("Stop Host"))
+                if (GUILayout.Button("Leave Server (H)"))
                     manager.StopHost();
 
                 // stop client if host mode, leaving server up
-                if (GUILayout.Button("Stop Client"))
+                if (GUILayout.Button("Leave Server (CH)"))
                     manager.StopClient();
 #endif
                 GUILayout.EndHorizontal();
@@ -148,7 +148,7 @@ namespace Mirror
             else if (NetworkClient.isConnected)
             {
                 // stop client if client-only
-                if (GUILayout.Button("Stop Client"))
+                if (GUILayout.Button("Leave Server (C)"))
                     manager.StopClient();
             }
             else if (NetworkServer.active)

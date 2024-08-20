@@ -130,10 +130,14 @@ public class FirstPersonController : NetworkBehaviour
     private Vector3 jointOriginalPos;
     private float timer = 0;
 
+    private bool camMode = false;
+    private Quaternion oldCamRotate;
+
     #endregion
 
     private void Awake()
     {
+
         rb = GetComponent<Rigidbody>();
 
         crosshairObject = GetComponentInChildren<Image>();
@@ -210,6 +214,20 @@ public class FirstPersonController : NetworkBehaviour
     private void Update()
     {
         if(!isLocalPlayer) return;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            lockCursor = !lockCursor;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            camMode = !camMode;
+            Camera();
+        }
+
+        Cursor.lockState = lockCursor?CursorLockMode.Locked:CursorLockMode.None;
+        Cursor.visible = !lockCursor;
 
         #region Camera
 
@@ -370,6 +388,19 @@ public class FirstPersonController : NetworkBehaviour
         if(enableHeadBob)
         {
             HeadBob();
+        }
+    }
+
+    void Camera()
+    {
+        if (camMode==true)
+        {
+            playerCamera.transform.position += new Vector3(0,1,1);
+            oldCamRotate = playerCamera.transform.rotation;
+            //playerCamera.transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
+        } else {
+            playerCamera.transform.position -= new Vector3(0,1,1);
+            playerCamera.transform.rotation = oldCamRotate;
         }
     }
 
@@ -717,7 +748,7 @@ public class FirstPersonController : NetworkBehaviour
         GUI.enabled = fpc.enableCrouch;
         fpc.holdToCrouch = EditorGUILayout.ToggleLeft(new GUIContent("Hold To Crouch", "Requires the player to hold the crouch key instead if pressing to crouch and uncrouch."), fpc.holdToCrouch);
         fpc.crouchKey = (KeyCode)EditorGUILayout.EnumPopup(new GUIContent("Crouch Key", "Determines what key is used to crouch."), fpc.crouchKey);
-        fpc.crouchHeight = EditorGUILayout.Slider(new GUIContent("Crouch Height", "Determines the y scale of the player object when crouched."), fpc.crouchHeight, .1f, 1);
+        fpc.crouchHeight = EditorGUILayout.Slider(new GUIContent("Crouch Height", "Determines the y scale of the player object when crouched."), fpc.crouchHeight, .1f, 9999);
         fpc.speedReduction = EditorGUILayout.Slider(new GUIContent("Speed Reduction", "Determines the percent 'Walk Speed' is reduced by. 1 being no reduction, and .5 being half."), fpc.speedReduction, .1f, 1);
         GUI.enabled = true;
 

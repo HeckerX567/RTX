@@ -43,14 +43,14 @@ namespace Mirror.Discovery
             GUILayout.BeginArea(new Rect(10, 10, 300, 500));
             GUILayout.BeginHorizontal();
 
-            if (GUILayout.Button("Find Servers"))
+            if (GUILayout.Button("Servers"))
             {
                 discoveredServers.Clear();
                 networkDiscovery.StartDiscovery();
             }
 
             // LAN Host
-            if (GUILayout.Button("Start Host"))
+            if (GUILayout.Button("Create Room"))
             {
                 discoveredServers.Clear();
                 NetworkManager.singleton.StartHost();
@@ -58,7 +58,7 @@ namespace Mirror.Discovery
             }
 
             // Dedicated server
-            if (GUILayout.Button("Start Server"))
+            if (GUILayout.Button("Create Server"))
             {
                 discoveredServers.Clear();
                 NetworkManager.singleton.StartServer();
@@ -69,7 +69,7 @@ namespace Mirror.Discovery
 
             // show list of found server
 
-            GUILayout.Label($"Discovered Servers [{discoveredServers.Count}]:");
+            GUILayout.Label($"Servers Active [{discoveredServers.Count}]:");
 
             // servers
             scrollViewPos = GUILayout.BeginScrollView(scrollViewPos);
@@ -89,7 +89,7 @@ namespace Mirror.Discovery
             // stop host if host mode
             if (NetworkServer.active && NetworkClient.isConnected)
             {
-                if (GUILayout.Button("Stop Host"))
+                if (GUILayout.Button("Leave Server"))
                 {
                     NetworkManager.singleton.StopHost();
                     networkDiscovery.StopDiscovery();
@@ -98,7 +98,7 @@ namespace Mirror.Discovery
             // stop client if client-only
             else if (NetworkClient.isConnected)
             {
-                if (GUILayout.Button("Stop Client"))
+                if (GUILayout.Button("Leave Server"))
                 {
                     NetworkManager.singleton.StopClient();
                     networkDiscovery.StopDiscovery();
@@ -107,7 +107,7 @@ namespace Mirror.Discovery
             // stop server if server-only
             else if (NetworkServer.active)
             {
-                if (GUILayout.Button("Stop Server"))
+                if (GUILayout.Button("Leave Server"))
                 {
                     NetworkManager.singleton.StopServer();
                     networkDiscovery.StopDiscovery();

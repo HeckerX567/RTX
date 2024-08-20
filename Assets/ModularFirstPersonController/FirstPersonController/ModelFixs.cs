@@ -6,13 +6,33 @@ using Mirror;
 public class ModelFixs : NetworkBehaviour
 {
 
-    [SerializeField] private GameObject model;
+    public Animator playerAnim;
 
-    // Start is called before the first frame update
-    void Start()
+    void Update()
     {
         if(!isLocalPlayer) return;
 
-        model.SetActive(false);
+        if (Input.GetKey(KeyCode.W))
+        {
+            //if(!isLocalPlayer) return;
+            playerAnim.SetBool("IsRunning", true);
+            //playerAnim.avatar = "RunAnimAvatar";
+        } else if (Input.GetKey(KeyCode.A)) {
+            //if(!isLocalPlayer) return;
+            playerAnim.SetBool("IsRunning", true);
+            //playerAnim.avatar = "RunAnimAvatar";
+        } else if (Input.GetKey(KeyCode.S)) {
+            //if(!isLocalPlayer) return;
+            playerAnim.SetBool("IsRunning", true);
+            //playerAnim.avatar = "RunAnimAvatar";
+        } else if (Input.GetKey(KeyCode.D)) {
+            //if(!isLocalPlayer) return;
+            playerAnim.SetBool("IsRunning", true);
+            //playerAnim.avatar = "RunAnimAvatar";
+        } else {
+            //if(!isLocalPlayer) return;
+            playerAnim.SetBool("IsRunning", false);
+            //playerAnim.avatar = "Idle (1)Avatar";
+        }
     }
 }
